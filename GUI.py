@@ -1,50 +1,53 @@
 #!/usr/bin/python3
 
-def choose1(event):
+class Lables:
+	def __init__(self,x=2,y=1,text_="HIGHER\nLOWER"):
+		self.obj=Label(mainframe,text=text_,fg="#485054",bg='#e0dbd7',font="Sans-serif 70",bd=80)
+		self.obj.grid(column=x,row=y,sticky=(N,S))
+	def check(self,points):
+		self.obj.config(text="Points:"+points)
+class buttons:
+	def __init__(self,x,y,cmmnd,s_,text_="-"):
+		self.but=Button(mainframe,text=text_,fg="#503457",bg="#e0dbd7",font="Sans-serif 30",width=9,height=3)
+		self.but.grid(column=x,row=y,sticky=s_,padx=50)
+		self.but.bind("<Button-1>",cmmnd)
+	def check(self,text_=''):
+		self.but.config(text=text_)
+def chs_1(event):
+	global points
 	if maincode.checkans(1):
-		mlbl.config(text="Yes! That's right!",fg="#34c924")
-		maincode.create()
-		time.sleep(0.5)
-		check()
-	else:
-		mlbl.config(text="No, it's not.",fg='#f75394')
-		obj1.destroy(); obj2.destroy()
-		return 1
-def choose2(event):
+		points+=1	
+	maincode.refresh()
+	r3fr3sH()
+	
+def chs_2(event):
+	global points
 	if maincode.checkans(2):
-		mlbl.config(text="Yes! That's right!",fg="#34c924")
-		maincode.create()
-		time.sleep(0.5)
-		mlbl.config(text='HIGHER / LOWER',fg="#485054")
-		check()
-	else:
-		mlbl.config(text="No, it's not.",fg='#f75394')
-		obj1.destroy(); obj2.destroy()
-def check():
-	obj1.config(text=maincode.lastname)
-	obj2.config(text=maincode.name)
-
+		points+=1
+	maincode.refresh()
+	r3fr3sH()
+def r3fr3sH():
+	Points.check(str(points))
+	obj2.check(maincode.lastname)
+	obj3.check(maincode.name)
 from tkinter import *
 import time
 import maincode
-root=Tk(); root.title("Higher/Lower")
+points=0
 maincode.startProg()
+root=Tk(); root.title('Higher-Lower'); root.geometry('1220x600'); root['bg']="#e0dbd7"
 
-mainframe=Frame(root,width=1000,height=800,bg='#e0dbd7',bd=100)
+#creating mainframe
+mainframe=Frame(root,width=1000,height=800,bg='#e0dbd7')
 mainframe.grid(column=0,row=0,sticky=(N,E,W,S))
 
-mlbl=Label(mainframe,text='HIGHER / LOWER',font="Sans-serif 80",fg="#485054",bg='#e0dbd7')
-mlbl.grid(column=2,row=1,sticky=(N,S))
-
-obj1=Button(mainframe,text="-",font="Sans-serif 70",fg="#503457",bg='#e0dbd7')
-obj1.grid(column=1,row=2,sticky=W)
-
-obj2=Button(mainframe,text="-",font="Sans-serif 70",fg="#503457",bg='#e0dbd7')
-obj2.grid(column=3,row=2,sticky=E)
-
-obj1.bind("<Button-1>",choose1)
-obj2.bind("<Button-1>",choose2)
+#создаем объекты (Основная надпись, вариант слева, вариант справа,  кол-во очков)
+obj1=Lables()
+obj2=buttons(1,2,chs_1,W)
+obj3=buttons(3,2,chs_2,E)
+Points=Lables(2,2,"Points:"+str(points))
 
 maincode.create()
-check()
+r3fr3sH()
+
 root.mainloop()
