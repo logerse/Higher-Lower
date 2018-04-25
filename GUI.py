@@ -74,6 +74,8 @@ obj3=buttons(3,2,chs_2,E)
 Points=Lables(2,2,"Points:"+str(points))
 
 maincode.create()
+print(maincode.lastname,'|',maincode.name)
+print(maincode.lastraiting,'|',maincode.raiting)
 r3fr3sH()
 
 root.mainloop()
